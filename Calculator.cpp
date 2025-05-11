@@ -1,5 +1,6 @@
 #include "Calculator.h"
 
+// Default constructor.
 Calculator::Calculator()
 {
     numbers.clear();
@@ -9,13 +10,16 @@ Calculator::Calculator()
     done = false;
 }
 
-void Calculator::setVector() 
+// Empties the vector and resets the values to infinity.
+void Calculator::setVector()
 {
     numbers.clear();
     numbers.push_back(INFINITY);
     numbers.push_back(INFINITY);
 }
 
+
+// Gets user input to determine first value of the numbers vector.
 void Calculator::setFirstNumber()
 {
     numbers[0] = INFINITY;
@@ -37,16 +41,20 @@ void Calculator::setFirstNumber()
     }
 }
 
+// Sets the first value of the numbers vector to the given double.
+// Used mainly to continue an answer into the next equation.
 void Calculator::setFirstNumber(double result)
 {
     numbers[0] = result;
 }
 
+// Return the first value of the numbers vector.
 double Calculator::getFirstNumber()
 {
     return numbers.front();
 }
 
+// Gets user input to set the second value in the numbers vector.
 void Calculator::setSecondNumber()
 {
     numbers[1] = INFINITY;
@@ -72,6 +80,7 @@ void Calculator::setSecondNumber()
     }
 }
 
+// Return the second number of the numbers vector.
 double Calculator::getSecondNumber()
 {
     return numbers.at(1);
@@ -84,16 +93,16 @@ void Calculator::setOperation()
     {
         cout << "Choose an operation: x, /, +, -, e for exponent, c to clear, or q to quit: ";
         cin >> operation;
-        
+
         if (operation != 'x' && operation != '/' && operation != '+'
-         && operation != '-' && operation != 'e' && operation != 'c' && operation != 'q')
+            && operation != '-' && operation != 'e' && operation != 'c' && operation != 'q')
         {
             cout << "Please choose a valid operation." << endl;
             cin.clear();
             cin.ignore(1000, '\n');
             operation = ' ';
         }
-        
+
         if (operation == 'q' || operation == 'c')
         {
             calculate();
@@ -101,11 +110,13 @@ void Calculator::setOperation()
     }
 }
 
+// Return the operation that was selected.
 char Calculator::getOperation()
 {
     return operation;
 }
 
+// Multiplication operation.
 void Calculator::performMultiplication()
 {
     double result = getFirstNumber() * getSecondNumber();
@@ -114,6 +125,7 @@ void Calculator::performMultiplication()
     reset();
 }
 
+// Division operation.
 void Calculator::performDivision()
 {
     while (getSecondNumber() == 0)
@@ -121,13 +133,14 @@ void Calculator::performDivision()
         cout << "Cant't divide by 0" << endl;
         setSecondNumber();
     }
-    
+
     double result = getFirstNumber() / getSecondNumber();
     setFirstNumber(result);
     displayAnswer();
     reset();
 }
 
+// Addition operation.
 void Calculator::performAddition()
 {
     double result = getFirstNumber() + getSecondNumber();
@@ -136,6 +149,7 @@ void Calculator::performAddition()
     reset();
 }
 
+// Subtraction operation.
 void Calculator::performSubtraction()
 {
     double result = getFirstNumber() - getSecondNumber();
@@ -144,6 +158,7 @@ void Calculator::performSubtraction()
     reset();
 }
 
+// Exponent operation.
 void Calculator::performExponent()
 {
     double result = pow(getFirstNumber(), getSecondNumber());
@@ -152,64 +167,68 @@ void Calculator::performExponent()
     reset();
 }
 
+// Output the answer.
 void Calculator::displayAnswer()
 {
     cout << "Answer is: " << getFirstNumber() << "\n";
 }
 
+// identify the operation that was selected and go to that equation, or clear all inputs, or exit the program.
 void Calculator::calculate()
 {
     switch (getOperation())
     {
-        case 'x':
-        {
-            performMultiplication();
-            break;
-        }
+    case 'x':
+    {
+        performMultiplication();
+        break;
+    }
 
-        case '/':
-        {
-            performDivision();
-            break;
-        }
+    case '/':
+    {
+        performDivision();
+        break;
+    }
 
-        case '+':
-        {
-            performAddition();
-            break;
-        }
+    case '+':
+    {
+        performAddition();
+        break;
+    }
 
-        case '-':
-        {
-            performSubtraction();
-            break;
-        }
+    case '-':
+    {
+        performSubtraction();
+        break;
+    }
 
-        case 'e':
-        {
-            performExponent();
-            break;
-        }
+    case 'e':
+    {
+        performExponent();
+        break;
+    }
 
-        case 'c':
-        {
-            clear();
-            break;
-        }
+    case 'c':
+    {
+        clear();
+        break;
+    }
 
-        case 'q':
-        {
-            quit();
-            break;
-        }
+    case 'q':
+    {
+        quit();
+        break;
+    }
     }
 }
 
+// Return done.
 bool Calculator::getDone()
 {
     return done;
 }
 
+// Remove all values inputed but keep the first as the new result for future inputs.
 void Calculator::reset()
 {
     if (numbers.size() > 1) {
@@ -220,11 +239,13 @@ void Calculator::reset()
     numbers.push_back(INFINITY);
 }
 
+// Remove all user inputed values and reset the vector.
 void Calculator::clear()
 {
-    setVector();        
+    setVector();
 }
 
+// Set done to true to exit the program.
 void Calculator::quit()
 {
     done = true;
